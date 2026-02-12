@@ -5,72 +5,220 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Hade Admin Panel</title>
   <style>
-    :root{--bg:#080b18;--panel:rgba(11,16,28,.78);--line:rgba(255,255,255,.14);--text:#f5f7ff;--muted:#b5bfdc;--accent:#8e77ff}
-    *{box-sizing:border-box} body{margin:0;min-height:100vh;font-family:Inter,system-ui;color:var(--text);background:radial-gradient(circle at top,#1b2050 0,#090d1d 60%)}
-    .shell{width:min(1050px,100%);margin:1rem auto;padding:1rem;border:1px solid var(--line);border-radius:22px;background:linear-gradient(130deg,rgba(142,119,255,.14),rgba(142,119,255,.01)),var(--panel)}
-    .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.55rem} .full{grid-column:1/-1}
-    label{display:grid;gap:.3rem;color:var(--muted);font-size:.9rem} input,textarea{border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--text);padding:.6rem .68rem;font:inherit}
-    .actions,.upload-row{display:flex;flex-wrap:wrap;gap:.5rem}.btn{border:1px solid var(--line);border-radius:999px;padding:.45rem .8rem;background:rgba(255,255,255,.03);color:var(--text);text-decoration:none;cursor:pointer}
-    .status{min-height:1.2em;color:#96ffd0}.inbox{margin-top:1rem;border-top:1px solid var(--line);padding-top:.9rem}.messages{display:grid;gap:.5rem;margin-top:.55rem}
-    .message{border:1px solid var(--line);border-radius:12px;padding:.6rem;background:rgba(255,255,255,.03)} .top{display:flex;justify-content:space-between;gap:.5rem;font-size:.83rem;color:var(--muted)}
-    .preview{width:90px;height:90px;border-radius:12px;object-fit:cover;border:1px solid var(--line)} @media (max-width:760px){.grid{grid-template-columns:1fr}}
+    :root{--bg:#080b18;--panel:rgba(11,16,28,.82);--line:rgba(255,255,255,.14);--text:#f5f7ff;--muted:#b5bfdc;--accent:#8e77ff;--ok:#96ffd0;--bad:#ff8ea8}
+    *{box-sizing:border-box}
+    body{margin:0;min-height:100vh;font-family:Inter,system-ui;color:var(--text);background:radial-gradient(circle at top,#1b2050 0,#090d1d 60%)}
+    .shell{width:min(1150px,100%);margin:1rem auto;padding:1rem;border:1px solid var(--line);border-radius:22px;background:linear-gradient(130deg,rgba(142,119,255,.14),rgba(142,119,255,.02)),var(--panel);box-shadow:0 18px 50px rgba(0,0,0,.42)}
+    .topbar{display:flex;justify-content:space-between;align-items:center;gap:.8rem;flex-wrap:wrap}
+    .status{min-height:1.2em;color:var(--ok)}
+    .layout{display:grid;grid-template-columns:1.2fr .8fr;gap:1rem}
+    .card{border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.03);padding:.8rem}
+    .tabs{display:flex;flex-wrap:wrap;gap:.5rem;margin:.6rem 0}
+    .tab{border:1px solid var(--line);border-radius:999px;padding:.4rem .75rem;background:rgba(255,255,255,.03);cursor:pointer}
+    .tab.active{border-color:var(--accent);box-shadow:0 8px 20px rgba(142,119,255,.28)}
+    .pane{display:none}.pane.active{display:block}
+    .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.55rem}.full{grid-column:1/-1}
+    label{display:grid;gap:.3rem;color:var(--muted);font-size:.9rem}
+    input,textarea{border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--text);padding:.6rem .68rem;font:inherit}
+    .actions,.upload-row{display:flex;flex-wrap:wrap;gap:.5rem}
+    .btn{border:1px solid var(--line);border-radius:999px;padding:.45rem .8rem;background:rgba(255,255,255,.03);color:var(--text);text-decoration:none;cursor:pointer;transition:.18s ease}
+    .btn:hover{transform:translateY(-1px);border-color:var(--accent)}
+    .preview{width:96px;height:96px;border-radius:12px;object-fit:cover;border:1px solid var(--line)}
+    .small{font-size:.84rem;color:var(--muted)}
+    .search{width:100%}
+    .messages{display:grid;gap:.5rem;margin-top:.55rem;max-height:600px;overflow:auto}
+    .message{border:1px solid var(--line);border-radius:12px;padding:.6rem;background:rgba(255,255,255,.03)}
+    .top{display:flex;justify-content:space-between;gap:.5rem;font-size:.83rem;color:var(--muted)}
+    .inline-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.5rem;margin:.6rem 0}
+    .s{border:1px solid var(--line);border-radius:12px;padding:.45rem .55rem;background:rgba(255,255,255,.02)}
+    .s b{display:block;font-size:1.05rem}
+    @media (max-width:980px){.layout{grid-template-columns:1fr}.grid{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
   <main class="shell">
-    <h1>⚙️ Admin Panel</h1>
-    <p class="status" id="status"></p>
-    <form id="admin-form" class="grid">
-      <label>Name <input id="name" type="text" /></label>
-      <label>Availability <input id="availability" type="text" /></label>
-      <label>Place <input id="place" type="text" /></label>
-      <label>Accent Color <input id="accentColor" type="text" placeholder="#8e77ff" /></label>
-      <label class="full">Description <textarea id="description" rows="3"></textarea></label>
-      <label>Music URL <input id="music" type="url" /></label>
-      <label>PFP URL <input id="pfp" type="text" /></label>
-      <div class="full upload-row">
-        <img id="pfp-preview" class="preview" src="/uploads/default-pfp.svg" alt="pfp preview" />
-        <input id="pfp-file" type="file" accept="image/*" />
-        <button id="upload-pfp" class="btn" type="button">Upload PFP</button>
-      </div>
-
-      <label class="full">Skills (comma separated)<input id="skills" type="text" /></label>
-      <label class="full">Links JSON<textarea id="links" rows="5"></textarea></label>
-      <label class="full">Projects JSON (supports image field)<textarea id="projects" rows="7"></textarea></label>
-      <div class="full upload-row">
-        <input id="project-file" type="file" accept="image/*" />
-        <button id="upload-project" class="btn" type="button">Upload Project Image</button>
-        <input id="project-image-output" type="text" placeholder="Uploaded project image URL appears here" />
-      </div>
-
-      <div class="full actions">
-        <button class="btn" type="submit">Save</button>
+    <div class="topbar">
+      <h1>⚙️ Admin Panel</h1>
+      <div class="actions">
         <button id="reload" class="btn" type="button">Reload</button>
         <button id="refresh" class="btn" type="button">Refresh Inbox</button>
         <a class="btn" href="/">Open Portfolio</a>
       </div>
-    </form>
+    </div>
+    <p class="status" id="status"></p>
 
-    <section class="inbox">
-      <h2>📨 Messages</h2>
-      <div id="messages" class="messages"></div>
-    </section>
+    <div class="layout">
+      <section class="card">
+        <div class="tabs">
+          <button class="tab active" data-pane="identity" type="button">Identity</button>
+          <button class="tab" data-pane="content" type="button">Content</button>
+          <button class="tab" data-pane="media" type="button">Media</button>
+        </div>
+
+        <form id="admin-form">
+          <div id="pane-identity" class="pane active">
+            <div class="grid">
+              <label>Name <input id="name" type="text" /></label>
+              <label>Availability <input id="availability" type="text" /></label>
+              <label>Place <input id="place" type="text" /></label>
+              <label>Accent Color <input id="accentColor" type="text" placeholder="#8e77ff" /></label>
+              <label class="full">Description <textarea id="description" rows="3"></textarea></label>
+            </div>
+          </div>
+
+          <div id="pane-content" class="pane">
+            <div class="grid">
+              <label class="full">Skills (comma separated)<input id="skills" type="text" /></label>
+              <label class="full">Links JSON<textarea id="links" rows="5"></textarea></label>
+              <label class="full">Projects JSON (supports image field)<textarea id="projects" rows="8"></textarea></label>
+            </div>
+          </div>
+
+          <div id="pane-media" class="pane">
+            <div class="grid">
+              <label>Music URL <input id="music" type="url" /></label>
+              <label>PFP URL <input id="pfp" type="text" /></label>
+              <div class="full upload-row">
+                <img id="pfp-preview" class="preview" src="/uploads/default-pfp.svg" alt="pfp preview" />
+                <input id="pfp-file" type="file" accept="image/*" />
+                <button id="upload-pfp" class="btn" type="button">Upload PFP</button>
+              </div>
+              <div class="full upload-row">
+                <input id="project-file" type="file" accept="image/*" />
+                <button id="upload-project" class="btn" type="button">Upload Project Image</button>
+                <input id="project-image-output" type="text" placeholder="Uploaded project image URL appears here" />
+              </div>
+            </div>
+          </div>
+
+          <div class="actions" style="margin-top:.7rem">
+            <button class="btn" type="submit">Save</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="card">
+        <h2>📨 Inbox</h2>
+        <div class="inline-stats" id="inbox-stats"></div>
+        <input id="search" class="search" type="text" placeholder="Search by name, email, or text..." />
+        <p class="small">Tip: use search to quickly find a message.</p>
+        <div id="messages" class="messages"></div>
+      </section>
+    </div>
   </main>
 
   <script>
     const byId=(id)=>document.getElementById(id);
-    async function api(path,opts){const r=await fetch(path,{...opts,headers:{...(opts&&opts.headers||{})}});const ct=r.headers.get('content-type')||'';const d=ct.includes('json')?await r.json():{};if(!r.ok)throw new Error(d.error||'Request failed');return d}
-    function setStatus(text,ok=true){const s=byId('status');s.style.color=ok?'#96ffd0':'#ff8ea8';s.textContent=text;}
-    function fill(cfg){byId('name').value=cfg.name||'';byId('availability').value=cfg.availability||'';byId('place').value=cfg.place||'';byId('accentColor').value=cfg.accentColor||'';byId('description').value=cfg.description||'';byId('music').value=cfg.music||'';byId('pfp').value=cfg.pfp||'';byId('pfp-preview').src=cfg.pfp||'/uploads/default-pfp.svg';byId('skills').value=(cfg.skills||[]).join(', ');byId('links').value=JSON.stringify(cfg.links||[],null,2);byId('projects').value=JSON.stringify(cfg.projects||[],null,2)}
-    function collect(){return{name:byId('name').value.trim(),availability:byId('availability').value.trim(),place:byId('place').value.trim(),accentColor:byId('accentColor').value.trim(),description:byId('description').value.trim(),music:byId('music').value.trim(),pfp:byId('pfp').value.trim(),skills:byId('skills').value.split(',').map(x=>x.trim()).filter(Boolean),links:JSON.parse(byId('links').value),projects:JSON.parse(byId('projects').value)}}
-    async function upload(fileInput,outputInput){const f=fileInput.files&&fileInput.files[0]; if(!f){throw new Error('Choose a file first');} const fd=new FormData(); fd.append('file',f); const res=await fetch('/api/upload',{method:'POST',body:fd}); const d=await res.json(); if(!res.ok)throw new Error(d.error||'Upload failed'); outputInput.value=d.url; return d.url;}
-    async function loadAll(){const cfg=await fetch('/api/config').then(r=>r.json()); fill(cfg); const msgs=await fetch('/api/messages').then(r=>r.json()); byId('messages').innerHTML=msgs.map(m=>`<article class="message"><div class="top"><span><b>${m.name}</b> • ${m.email}</span><span>${new Date(m.created_at).toLocaleString()}</span></div><p>${m.message}</p></article>`).join('') || '<p>No messages yet.</p>'}
+    let allMessages=[];
 
-    byId('upload-pfp').onclick=async()=>{try{const url=await upload(byId('pfp-file'),byId('pfp')); byId('pfp').value=url;byId('pfp-preview').src=url;setStatus('PFP uploaded. Save config now.');}catch(e){setStatus(e.message,false)}};
-    byId('upload-project').onclick=async()=>{try{const url=await upload(byId('project-file'),byId('project-image-output')); setStatus('Project image uploaded. Paste URL into projects JSON image field.');byId('project-image-output').value=url;}catch(e){setStatus(e.message,false)}};
-    byId('admin-form').onsubmit=async(e)=>{e.preventDefault();try{await fetch('/api/config',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(collect())}).then(async r=>{const d=await r.json();if(!r.ok)throw new Error(d.error||'save failed')});setStatus('Saved live config ✅');}catch(err){setStatus(err.message,false)}};
+    function setStatus(text,ok=true){const s=byId('status');s.style.color=ok?'#96ffd0':'#ff8ea8';s.textContent=text;}
+    async function api(path,opts={}){const r=await fetch(path,opts);const ct=r.headers.get('content-type')||'';const d=ct.includes('json')?await r.json():{};if(!r.ok)throw new Error(d.error||'Request failed');return d}
+
+    function bindTabs(){
+      document.querySelectorAll('.tab').forEach(btn=>btn.onclick=()=>{
+        document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t===btn));
+        const key=btn.dataset.pane;
+        document.querySelectorAll('.pane').forEach(p=>p.classList.toggle('active',p.id===`pane-${key}`));
+      });
+    }
+
+    function fill(cfg){
+      byId('name').value=cfg.name||'';
+      byId('availability').value=cfg.availability||'';
+      byId('place').value=cfg.place||'';
+      byId('accentColor').value=cfg.accentColor||'';
+      byId('description').value=cfg.description||'';
+      byId('music').value=cfg.music||'';
+      byId('pfp').value=cfg.pfp||'';
+      byId('pfp-preview').src=cfg.pfp||'/uploads/default-pfp.svg';
+      byId('skills').value=(cfg.skills||[]).join(', ');
+      byId('links').value=JSON.stringify(cfg.links||[],null,2);
+      byId('projects').value=JSON.stringify(cfg.projects||[],null,2);
+    }
+
+    function collect(){
+      return {
+        name:byId('name').value.trim(),
+        availability:byId('availability').value.trim(),
+        place:byId('place').value.trim(),
+        accentColor:byId('accentColor').value.trim(),
+        description:byId('description').value.trim(),
+        music:byId('music').value.trim(),
+        pfp:byId('pfp').value.trim(),
+        skills:byId('skills').value.split(',').map(x=>x.trim()).filter(Boolean),
+        links:JSON.parse(byId('links').value),
+        projects:JSON.parse(byId('projects').value)
+      }
+    }
+
+    async function upload(fileInput){
+      const f=fileInput.files&&fileInput.files[0];
+      if(!f) throw new Error('Choose a file first');
+      const fd=new FormData();
+      fd.append('file',f);
+      const res=await fetch('/api/upload',{method:'POST',body:fd});
+      const d=await res.json();
+      if(!res.ok) throw new Error(d.error||'Upload failed');
+      return d.url;
+    }
+
+    function renderInboxStats(messages){
+      const total=messages.length;
+      const uniqueEmails=new Set(messages.map(m=>m.email)).size;
+      const today=messages.filter(m=>{
+        const d=new Date(m.created_at); const n=new Date();
+        return d.getFullYear()===n.getFullYear() && d.getMonth()===n.getMonth() && d.getDate()===n.getDate();
+      }).length;
+      byId('inbox-stats').innerHTML=`
+        <div class="s"><b>${total}</b><span class="small">Total</span></div>
+        <div class="s"><b>${uniqueEmails}</b><span class="small">Unique Emails</span></div>
+        <div class="s"><b>${today}</b><span class="small">Today</span></div>
+      `;
+    }
+
+    function renderMessages(messages){
+      renderInboxStats(messages);
+      byId('messages').innerHTML=messages.map(m=>`<article class="message"><div class="top"><span><b>${m.name}</b> • ${m.email}</span><span>${new Date(m.created_at).toLocaleString()}</span></div><p>${m.message}</p></article>`).join('') || '<p class="small">No messages yet.</p>';
+    }
+
+    function filterMessages(){
+      const q=byId('search').value.trim().toLowerCase();
+      if(!q){renderMessages(allMessages);return;}
+      const filtered=allMessages.filter(m=>`${m.name} ${m.email} ${m.message}`.toLowerCase().includes(q));
+      renderMessages(filtered);
+    }
+
+    async function loadAll(){
+      const cfg=await api('/api/config');
+      fill(cfg);
+      allMessages=await api('/api/messages');
+      renderMessages(allMessages);
+    }
+
+    byId('upload-pfp').onclick=async()=>{
+      try{const url=await upload(byId('pfp-file'));byId('pfp').value=url;byId('pfp-preview').src=url;setStatus('PFP uploaded. Click Save.');}
+      catch(e){setStatus(e.message,false)}
+    };
+
+    byId('upload-project').onclick=async()=>{
+      try{const url=await upload(byId('project-file'));byId('project-image-output').value=url;setStatus('Project image uploaded. Put URL in projects JSON image field.');}
+      catch(e){setStatus(e.message,false)}
+    };
+
+    byId('admin-form').onsubmit=async(e)=>{
+      e.preventDefault();
+      try{
+        const payload=collect();
+        await api('/api/config',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+        setStatus('Saved live config ✅');
+      }catch(err){setStatus(err.message,false)}
+    };
+
     byId('reload').onclick=()=>loadAll().then(()=>setStatus('Reloaded')).catch(e=>setStatus(e.message,false));
     byId('refresh').onclick=()=>loadAll().then(()=>setStatus('Inbox refreshed')).catch(e=>setStatus(e.message,false));
+    byId('search').oninput=filterMessages;
+
+    bindTabs();
     loadAll().catch(e=>setStatus(e.message,false));
   </script>
 </body>

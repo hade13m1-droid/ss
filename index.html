@@ -5,43 +5,71 @@
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>Hade Portfolio</title>
   <style>
-    :root{--bg:#070912;--panel:rgba(11,16,28,.72);--line:rgba(255,255,255,.14);--text:#f5f7ff;--muted:#b5bfdc;--accent:#8e77ff}
-    *{box-sizing:border-box} body{margin:0;min-height:100vh;font-family:Inter,system-ui;color:var(--text);background:radial-gradient(circle at 20% 20%,#2b236b 0,#121936 45%,#070912 85%)}
-    .shell{width:min(980px,100%);margin:0 auto;padding:1rem;display:grid;gap:.9rem}
-    .glass{border:1px solid var(--line);border-radius:20px;background:linear-gradient(130deg,rgba(142,119,255,.14),rgba(142,119,255,.01)),var(--panel);backdrop-filter:blur(10px);box-shadow:0 18px 45px rgba(0,0,0,.4)}
-    .hero{padding:1rem;display:grid;grid-template-columns:auto 1fr;gap:1rem;align-items:center}
-    .avatar{width:94px;height:94px;border-radius:50%;border:1px solid var(--line);object-fit:cover}
-    h1{margin:0}.tag{font-size:.72rem;letter-spacing:.15em;color:#96ffd0;margin:0 0 .3rem}.muted{color:var(--muted)}
-    .panel{padding:1rem} h2{margin:0 0 .7rem;font-size:.9rem;color:var(--muted);letter-spacing:.1em;text-transform:uppercase}
-    .chips,.links,.hero-actions{display:flex;flex-wrap:wrap;gap:.5rem}.chip,.links a,.btn{border:1px solid var(--line);border-radius:999px;padding:.45rem .8rem;background:rgba(255,255,255,.03);color:var(--text);text-decoration:none}
-    .projects{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.6rem}.project{border:1px solid var(--line);border-radius:12px;padding:.7rem;background:rgba(255,255,255,.03)}
-    .project img{width:100%;height:130px;object-fit:cover;border-radius:10px;margin:.2rem 0 .5rem;border:1px solid var(--line)}
-    .contact{display:grid;gap:.55rem} input,textarea{border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--text);padding:.6rem .68rem;font:inherit}
-    .status{min-height:1.2em;color:#96ffd0} @media (max-width:760px){.hero{grid-template-columns:1fr;justify-items:center;text-align:center}}
+    :root{--bg:#060812;--bg2:#141735;--panel:rgba(10,14,28,.75);--line:rgba(255,255,255,.14);--text:#f5f7ff;--muted:#b8c1df;--accent:#8e77ff;--ok:#96ffd0}
+    *{box-sizing:border-box}
+    body{margin:0;min-height:100vh;font-family:Inter,system-ui;color:var(--text);background:radial-gradient(circle at 20% 10%,#2d2468 0,var(--bg2) 42%,var(--bg) 85%)}
+    .shell{width:min(1080px,100%);margin:0 auto;padding:1rem;display:grid;gap:1rem}
+    .glass{border:1px solid var(--line);border-radius:22px;background:linear-gradient(130deg,rgba(142,119,255,.16),rgba(142,119,255,.02)),var(--panel);backdrop-filter:blur(12px);box-shadow:0 18px 50px rgba(0,0,0,.42)}
+    .hero{padding:1rem;display:grid;grid-template-columns:auto 1fr;gap:1rem;align-items:center;position:relative;overflow:hidden}
+    .hero:after{content:'';position:absolute;right:-100px;top:-100px;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle,rgba(90,210,255,.2),rgba(90,210,255,0));pointer-events:none}
+    .avatar{width:100px;height:100px;border-radius:50%;border:1px solid var(--line);object-fit:cover;box-shadow:0 0 0 8px rgba(142,119,255,.16)}
+    .hero-grid{display:grid;grid-template-columns:1fr auto;gap:1rem;align-items:start}
+    h1{margin:0;font-size:clamp(1.45rem,3vw,2.15rem)} h1 span{color:var(--accent)}
+    .tag{font-size:.72rem;letter-spacing:.18em;color:var(--ok);margin:0 0 .35rem}
+    .muted{color:var(--muted)}
+    .mini-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.5rem}
+    .stat{border:1px solid var(--line);border-radius:12px;padding:.45rem .55rem;background:rgba(255,255,255,.03)}
+    .stat b{display:block;font-size:1.03rem}
+    .stat span{font-size:.74rem;color:var(--muted)}
+    .hero-actions,.chips,.links{display:flex;flex-wrap:wrap;gap:.5rem}
+    .chip,.links a,.btn{border:1px solid var(--line);border-radius:999px;padding:.45rem .82rem;background:rgba(255,255,255,.03);color:var(--text);text-decoration:none;transition:.18s ease}
+    .btn{cursor:pointer;font:inherit}
+    .btn:hover,.links a:hover{transform:translateY(-1px);border-color:var(--accent);box-shadow:0 8px 20px rgba(142,119,255,.28)}
+    .panel{padding:1rem}
+    h2{margin:0 0 .75rem;font-size:.9rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+    .projects{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.65rem}
+    .project{border:1px solid var(--line);border-radius:14px;padding:.7rem;background:rgba(255,255,255,.03)}
+    .project img{width:100%;height:130px;object-fit:cover;border-radius:10px;margin:.15rem 0 .45rem;border:1px solid var(--line)}
+    .project h3{margin:.1rem 0;font-size:.95rem}
+    .project p{margin:.3rem 0 0;color:var(--muted);font-size:.9rem}
+    .contact{display:grid;gap:.55rem}
+    input,textarea{border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--text);padding:.6rem .68rem;font:inherit}
+    .status{min-height:1.2em;color:var(--ok)}
+    .banner{border:1px dashed var(--line);border-radius:12px;padding:.55rem .65rem;color:var(--muted);font-size:.88rem;background:rgba(255,255,255,.02)}
+    @media (max-width:900px){.hero-grid{grid-template-columns:1fr}.mini-stats{grid-template-columns:repeat(3,minmax(0,1fr));}}
+    @media (max-width:760px){.hero{grid-template-columns:1fr;justify-items:center;text-align:center}.hero-actions,.chips,.links{justify-content:center}.grid2{grid-template-columns:1fr}.mini-stats{grid-template-columns:1fr 1fr}}
   </style>
 </head>
 <body>
   <main class="shell">
     <section class="hero glass">
       <img id="pfp" class="avatar" src="/uploads/default-pfp.svg" alt="pfp" />
-      <div>
-        <p id="availability" class="tag">AVAILABLE NOW</p>
-        <h1>Hi, I'm <span id="name">Hade</span></h1>
-        <p id="description" class="muted">Loading...</p>
-        <p id="place" class="muted">📍 Morocco</p>
-        <div class="hero-actions">
-          <a class="btn" href="/admin">Admin</a>
-          <button id="music-toggle" class="btn" type="button">🔇 Music Off</button>
+      <div class="hero-grid">
+        <div>
+          <p id="availability" class="tag">AVAILABLE NOW</p>
+          <h1>Hi, I'm <span id="name">Hade</span></h1>
+          <p id="description" class="muted">Loading...</p>
+          <p id="place" class="muted">📍 Morocco</p>
+          <div class="hero-actions">
+            <a class="btn" href="/admin">Admin</a>
+            <button id="music-toggle" class="btn" type="button">🔇 Music Off</button>
+          </div>
         </div>
+        <div class="mini-stats" id="quick-stats"></div>
       </div>
     </section>
 
-    <section class="panel glass"><h2>Skills</h2><div id="skills" class="chips"></div></section>
-    <section class="panel glass"><h2>Links</h2><div id="links" class="links"></div></section>
+    <section class="grid2">
+      <div class="panel glass"><h2>Skills</h2><div id="skills" class="chips"></div></div>
+      <div class="panel glass"><h2>Links</h2><div id="links" class="links"></div></div>
+    </section>
+
     <section class="panel glass"><h2>Projects</h2><div id="projects" class="projects"></div></section>
 
     <section class="panel glass">
       <h2>Live Contact Form</h2>
+      <p class="banner">This is live — messages go straight to your backend inbox in admin.</p>
       <form id="contact-form" class="contact">
         <input id="contact-name" type="text" placeholder="Name" minlength="2" required />
         <input id="contact-email" type="email" placeholder="Email" required />
@@ -58,19 +86,35 @@
     async function api(path,opts){const r=await fetch(path,{...opts,headers:{'Content-Type':'application/json',...(opts&&opts.headers||{})}});const d=await r.json();if(!r.ok)throw new Error(d.error||'Request failed');return d}
     function render(cfg){
       document.documentElement.style.setProperty('--accent',cfg.accentColor||'#8e77ff');
-      byId('name').textContent=cfg.name; byId('description').textContent=cfg.description; byId('place').textContent=`📍 ${cfg.place}`; byId('availability').textContent=cfg.availability;
+      byId('name').textContent=cfg.name||'Hade';
+      byId('description').textContent=cfg.description||'';
+      byId('place').textContent=`📍 ${cfg.place||''}`;
+      byId('availability').textContent=cfg.availability||'';
       byId('pfp').src=cfg.pfp||'/uploads/default-pfp.svg';
+
       byId('skills').innerHTML=(cfg.skills||[]).map(s=>`<span class="chip">${s}</span>`).join('');
       byId('links').innerHTML=(cfg.links||[]).map(l=>`<a href="${l.url||'#'}" target="_blank" rel="noreferrer">${l.label||'Link'}</a>`).join('');
-      byId('projects').innerHTML=(cfg.projects||[]).map(p=>`<article class="project">${p.image?`<img src="${p.image}" alt="project image">`:''}<h3>${p.title||''}</h3><p class="muted">${p.description||''}</p></article>`).join('');
+      byId('projects').innerHTML=(cfg.projects||[]).map(p=>`<article class="project">${p.image?`<img src="${p.image}" alt="project image">`:''}<h3>${p.title||''}</h3><p>${p.description||''}</p></article>`).join('');
+
+      const stats=[
+        {label:'SKILLS',value:String((cfg.skills||[]).length)},
+        {label:'PROJECTS',value:String((cfg.projects||[]).length)},
+        {label:'LINKS',value:String((cfg.links||[]).length)}
+      ];
+      byId('quick-stats').innerHTML=stats.map(s=>`<div class="stat"><b>${s.value}</b><span>${s.label}</span></div>`).join('');
+
       const audio=byId('bg-music'),btn=byId('music-toggle'); audio.src=cfg.music||''; let on=false;
       btn.onclick=async()=>{if(!cfg.music){btn.textContent='No music URL';return;} if(on){audio.pause();on=false;btn.textContent='🔇 Music Off';return;} try{await audio.play();on=true;btn.textContent='🎵 Music On'}catch{btn.textContent='Click again'}};
     }
-    byId('contact-form').addEventListener('submit',async(e)=>{e.preventDefault();const payload={name:byId('contact-name').value.trim(),email:byId('contact-email').value.trim(),message:byId('contact-message').value.trim()};
+
+    byId('contact-form').addEventListener('submit',async(e)=>{
+      e.preventDefault();
+      const payload={name:byId('contact-name').value.trim(),email:byId('contact-email').value.trim(),message:byId('contact-message').value.trim()};
       try{await api('/api/contact',{method:'POST',body:JSON.stringify(payload)});byId('contact-status').textContent='✅ Message sent';e.target.reset();}
       catch(err){byId('contact-status').textContent=`❌ ${err.message}`;}
     });
-    api('/api/config').then(render).catch(console.error);
+
+    api('/api/config').then(render).catch(err=>{byId('contact-status').textContent=`❌ ${err.message}`});
   </script>
 </body>
 </html>
