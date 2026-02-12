@@ -78,7 +78,7 @@
   <main class="wrap">
     <section class="card" id="profile-card">
       <div class="head">
-        <div class="avatarWrap"><img id="pfp" class="avatar" src="/uploads/default-pfp.svg" alt="avatar"><img id="deco" class="deco" src="" alt="decoration" style="display:none"></div>
+        <div class="avatarWrap"><img id="pfp" class="avatar" src="/uploads/default-pfp.svg" alt="avatar" onerror="this.src='/uploads/default-pfp.svg'"><img id="deco" class="deco" src="" alt="decoration" style="display:none"></div>
         <div><h1 class="u" id="name">Hade<span id="tw">|</span></h1><p class="desc" id="description">Im boring</p></div>
         <span id="availability" class="chip">ONLINE</span>
       </div>
@@ -92,7 +92,7 @@
       <section class="projects"><div class="top">Featured projects</div><div id="projects" class="projects-grid"></div></section>
 
       <section class="music" id="music-wrap" style="display:none">
-        <img id="music-cover" class="cover" src="/uploads/default-pfp.svg" alt="cover">
+        <img id="music-cover" class="cover" src="/uploads/default-pfp.svg" alt="cover" onerror="this.src='/uploads/default-pfp.svg'">
         <div><div id="music-title"><b>Track</b></div><div class="time"><span id="cur">0:00</span> / <span id="dur">0:00</span></div><div class="bar"><div class="fill" id="fill"></div></div></div>
         <div class="ctrl"><button id="play" type="button" class="btn">Play</button></div>
       </section>
@@ -137,7 +137,12 @@
       $('links').innerHTML=(cfg.links||[]).map(l=>`<a href='${esc(l.url||'#')}' target='_blank' rel='noopener'>${esc(l.label||'Link')}</a>`).join('');
       renderProjects(cfg.projects);
       $('profile-card').style.backgroundColor=`rgba(6,7,14,${cfg.cardOpacity ?? .72})`;
-      $('bgv').src=cfg.video||'';
+      const bg=$('bgv');
+      bg.src=cfg.video||'';
+      bg.load();
+      bg.play().catch(()=>{});
+      bg.onended=()=>{bg.currentTime=0;bg.play().catch(()=>{});};
+      bg.onerror=()=>{bg.removeAttribute('src');bg.load();};
 
       const showMusic=Boolean(cfg.music && String(cfg.music).trim());
       $('music-wrap').style.display=showMusic?'grid':'none';
@@ -152,8 +157,16 @@
 
     $('contact-form').onsubmit=async(e)=>{e.preventDefault();try{await j('/api/contact',{method:'POST',body:JSON.stringify({name:$('cn').value.trim(),email:$('ce').value.trim(),message:$('cm').value.trim()})});$('st').textContent='✅ Sent';e.target.reset();}catch(err){$('st').textContent='❌ '+err.message;}}
 
+    async function boot(){
+      try{
+        const cfg=await j('/api/config');
+        render(cfg);
+        try{const v=await j('/api/view',{method:'POST'});$('views').textContent=v.views??cfg.views??0;}catch{ $('views').textContent=cfg.views??0; }
+      }catch(err){$('st').textContent='❌ '+err.message;}
+    }
+
     cursorFx(); typing();
-    j('/api/config').then(render).catch(err=>{$('st').textContent='❌ '+err.message});
+    boot();
   </script>
 </body>
 </html>

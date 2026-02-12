@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import hashlib
 import json
 import sqlite3
 from datetime import datetime, timezone
@@ -27,7 +28,7 @@ DEFAULT_CONFIG = {
         "World keeps spinning... I imitate.",
     ],
     "place": "Earth",
-    "views": 8,
+    "views": 0,
     "availability": "ONLINE",
     "pfp": "/uploads/default-pfp.svg",
     "avatarDecoration": "",
@@ -92,6 +93,14 @@ def init_db() -> None:
             )
             """
         )
+        conn.execute(
+            """
+            CREATE TABLE IF NOT EXISTS profile_views (
+              visitor_key TEXT PRIMARY KEY,
+              created_at TEXT NOT NULL
+            )
+            """
+        )
         row = conn.execute("SELECT value FROM settings WHERE key='config'").fetchone()
         if row is None:
             conn.execute(
@@ -130,6 +139,19 @@ def save_config(payload: dict) -> None:
         )
 
 
+def client_fingerprint() -> str:
+    ip = (request.headers.get("X-Forwarded-For", "").split(",")[0].strip() or request.remote_addr or "unknown")
+    ua = request.headers.get("User-Agent", "unknown")
+    day = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    raw = f"{ip}|{ua}|{day}"
+    return hashlib.sha256(raw.encode("utf-8")).hexdigest()
+
+
+def current_views(conn: sqlite3.Connection) -> int:
+    row = conn.execute("SELECT COUNT(*) AS c FROM profile_views").fetchone()
+    return int(row["c"] if row and row["c"] is not None else 0)
+
+
 @app.get("/")
 def home():
     return send_file(INDEX_PATH)
@@ -147,7 +169,22 @@ def uploads(filename: str):
 
 @app.get("/api/config")
 def api_get_config():
-    return jsonify(get_config())
+    config = get_config()
+    with db() as conn:
+        config["views"] = current_views(conn)
+    return jsonify(config)
+
+
+@app.post("/api/view")
+def api_register_view():
+    key = client_fingerprint()
+    with db() as conn:
+        conn.execute(
+            "INSERT OR IGNORE INTO profile_views (visitor_key, created_at) VALUES (?, ?)",
+            (key, now_iso()),
+        )
+        total = current_views(conn)
+    return jsonify({"ok": True, "views": total})
 
 
 @app.post("/api/config")
@@ -155,6 +192,7 @@ def api_save_config():
     payload = request.get_json(silent=True)
     if not isinstance(payload, dict):
         return jsonify({"error": "Invalid JSON payload"}), 400
+    payload.pop("views", None)
     save_config(payload)
     return jsonify({"ok": True})
 

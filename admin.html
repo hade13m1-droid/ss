@@ -36,7 +36,7 @@
         <label>Name <input id="name"></label>
         <label>Description <input id="description"></label>
         <label>Place <input id="place"></label>
-        <label>Views <input id="views" type="number" min="0"></label>
+        <label>Views (auto) <input id="views" type="number" min="0" readonly></label>
         <label>Availability <input id="availability"></label>
         <label>Accent Color <input id="accentColor" placeholder="#ffffff"></label>
         <label>Card Opacity (0-1) <input id="cardOpacity" type="number" min="0" max="1" step="0.05"></label>
@@ -58,8 +58,10 @@
           <img id="p" class="preview" src="/uploads/default-pfp.svg" alt="pfp preview">
           <input id="pfpFile" type="file" accept="image/*">
           <button id="upPfp" type="button" class="btn">Upload PFP</button>
+          <input id="bgFile" type="file" accept="video/mp4">
+          <button id="upBg" type="button" class="btn">Upload Background MP4</button>
           <input id="genericFile" type="file" accept="image/*,video/mp4,audio/mpeg,audio/mp3">
-          <button id="upAny" type="button" class="btn">Upload Media</button>
+          <button id="upAny" type="button" class="btn">Upload Any Media</button>
           <input id="uploadedUrl" placeholder="uploaded URL" style="min-width:260px">
         </div>
 
@@ -88,6 +90,7 @@
     async function load(){const c=await api('/api/config');fill(c);all=await api('/api/messages');filter()}
 
     $('upPfp').onclick=async()=>{try{const u=await upload($('pfpFile'));$('pfp').value=u;$('p').src=u;status('PFP uploaded; save config.')}catch(e){status(e.message,false)}};
+    $('upBg').onclick=async()=>{try{const u=await upload($('bgFile'));$('video').value=u;$('uploadedUrl').value=u;status('Background uploaded; save config.')}catch(e){status(e.message,false)}};
     $('upAny').onclick=async()=>{try{const u=await upload($('genericFile'));$('uploadedUrl').value=u;status('Media uploaded. Copy URL into any field/json.')}catch(e){status(e.message,false)}};
     $('f').onsubmit=async(e)=>{e.preventDefault();try{await api('/api/config',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(collect())});status('Saved ✅')}catch(err){status(err.message,false)}};
     $('reload').onclick=()=>load().then(()=>status('Reloaded')).catch(e=>status(e.message,false));
