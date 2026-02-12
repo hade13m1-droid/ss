@@ -1,120 +1,147 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Hade Portfolio</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#1b1b1b">
+  <title>@hade133 | emogir.ls style</title>
   <style>
-    :root{--bg:#060812;--bg2:#141735;--panel:rgba(10,14,28,.75);--line:rgba(255,255,255,.14);--text:#f5f7ff;--muted:#b8c1df;--accent:#8e77ff;--ok:#96ffd0}
-    *{box-sizing:border-box}
-    body{margin:0;min-height:100vh;font-family:Inter,system-ui;color:var(--text);background:radial-gradient(circle at 20% 10%,#2d2468 0,var(--bg2) 42%,var(--bg) 85%)}
-    .shell{width:min(1080px,100%);margin:0 auto;padding:1rem;display:grid;gap:1rem}
-    .glass{border:1px solid var(--line);border-radius:22px;background:linear-gradient(130deg,rgba(142,119,255,.16),rgba(142,119,255,.02)),var(--panel);backdrop-filter:blur(12px);box-shadow:0 18px 50px rgba(0,0,0,.42)}
-    .hero{padding:1rem;display:grid;grid-template-columns:auto 1fr;gap:1rem;align-items:center;position:relative;overflow:hidden}
-    .hero:after{content:'';position:absolute;right:-100px;top:-100px;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle,rgba(90,210,255,.2),rgba(90,210,255,0));pointer-events:none}
-    .avatar{width:100px;height:100px;border-radius:50%;border:1px solid var(--line);object-fit:cover;box-shadow:0 0 0 8px rgba(142,119,255,.16)}
-    .hero-grid{display:grid;grid-template-columns:1fr auto;gap:1rem;align-items:start}
-    h1{margin:0;font-size:clamp(1.45rem,3vw,2.15rem)} h1 span{color:var(--accent)}
-    .tag{font-size:.72rem;letter-spacing:.18em;color:var(--ok);margin:0 0 .35rem}
-    .muted{color:var(--muted)}
-    .mini-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.5rem}
-    .stat{border:1px solid var(--line);border-radius:12px;padding:.45rem .55rem;background:rgba(255,255,255,.03)}
-    .stat b{display:block;font-size:1.03rem}
-    .stat span{font-size:.74rem;color:var(--muted)}
-    .hero-actions,.chips,.links{display:flex;flex-wrap:wrap;gap:.5rem}
-    .chip,.links a,.btn{border:1px solid var(--line);border-radius:999px;padding:.45rem .82rem;background:rgba(255,255,255,.03);color:var(--text);text-decoration:none;transition:.18s ease}
-    .btn{cursor:pointer;font:inherit}
-    .btn:hover,.links a:hover{transform:translateY(-1px);border-color:var(--accent);box-shadow:0 8px 20px rgba(142,119,255,.28)}
-    .panel{padding:1rem}
-    h2{margin:0 0 .75rem;font-size:.9rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
-    .grid2{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
-    .projects{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:.65rem}
-    .project{border:1px solid var(--line);border-radius:14px;padding:.7rem;background:rgba(255,255,255,.03)}
-    .project img{width:100%;height:130px;object-fit:cover;border-radius:10px;margin:.15rem 0 .45rem;border:1px solid var(--line)}
-    .project h3{margin:.1rem 0;font-size:.95rem}
-    .project p{margin:.3rem 0 0;color:var(--muted);font-size:.9rem}
-    .contact{display:grid;gap:.55rem}
-    input,textarea{border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--text);padding:.6rem .68rem;font:inherit}
-    .status{min-height:1.2em;color:var(--ok)}
-    .banner{border:1px dashed var(--line);border-radius:12px;padding:.55rem .65rem;color:var(--muted);font-size:.88rem;background:rgba(255,255,255,.02)}
-    @media (max-width:900px){.hero-grid{grid-template-columns:1fr}.mini-stats{grid-template-columns:repeat(3,minmax(0,1fr));}}
-    @media (max-width:760px){.hero{grid-template-columns:1fr;justify-items:center;text-align:center}.hero-actions,.chips,.links{justify-content:center}.grid2{grid-template-columns:1fr}.mini-stats{grid-template-columns:1fr 1fr}}
+    :root{--txt:#fff;--muted:rgba(255,255,255,.75);--card:rgba(0,0,0,.75);--bd:rgba(255,255,255,.12);--accent:#fff}
+    *{box-sizing:border-box} body{margin:0;color:var(--txt);font-family:Inter,system-ui;background:#111;min-height:100vh;overflow-x:hidden}
+    .bgv{position:fixed;inset:0;width:100%;height:100%;object-fit:cover;z-index:-3}.fallback{position:fixed;inset:0;z-index:-4;background:radial-gradient(circle at 20% 20%,#2a2a3d,#111 65%)}
+    .dots{position:fixed;inset:0;z-index:-2;opacity:.23;background-image:radial-gradient(rgba(255,255,255,.5) 1px,transparent 1px);background-size:3px 3px}
+    .wrap{max-width:760px;margin:20px auto;padding:10px}
+    .promo{display:flex;gap:.55rem;align-items:center;padding:.55rem .7rem;background:rgba(0,0,0,.55);border:1px solid var(--bd);border-radius:10px}
+    .promo img{width:38px;height:38px;border-radius:10px;object-fit:cover}.promo a{color:#fff;text-decoration:none}.promo small{display:block;color:var(--muted)}
+    .card{margin-top:10px;background:var(--card);backdrop-filter:blur(18px);border:1px solid var(--bd);border-radius:20px;padding:1rem;box-shadow:0 15px 44px rgba(0,0,0,.5)}
+    .head{display:grid;grid-template-columns:auto 1fr;gap:.8rem;align-items:center}.avatarWrap{position:relative}
+    .avatar{width:112px;height:112px;border-radius:50%;object-fit:cover;border:2px solid rgba(255,255,255,.2)}
+    .deco{position:absolute;inset:0;width:112px;height:112px;object-fit:cover;pointer-events:none}
+    .u{margin:0;font-size:1.75rem;filter:drop-shadow(0 0 9px rgba(255,255,255,.75));color:var(--accent)} .desc{margin:.35rem 0 0;color:var(--muted)}
+    .about{margin-top:.75rem;border-radius:18px;padding:.7rem;border:1px solid var(--bd);background:rgba(43,17,17,.08)} .about p{margin:.2rem 0}
+    .widget{margin-top:.75rem;border:1px solid rgba(69,74,160,.35);background:rgba(8,8,8,.82);border-radius:8px;padding:.7rem}
+    .widget .top{font-size:.88rem;color:var(--muted)}
+    .links{margin-top:.75rem;display:flex;gap:.55rem;flex-wrap:wrap}.links a{display:inline-flex;align-items:center;gap:.3rem;padding:.45rem .65rem;border:1px solid var(--bd);border-radius:999px;text-decoration:none;color:#fff;background:rgba(255,255,255,.03)}
+    .meta{margin-top:.75rem;display:flex;gap:.55rem;align-items:center;color:var(--muted);font-size:.9rem}
+    .music{margin-top:.75rem;border-radius:50px;background:rgba(0,0,0,.45);border:1px solid var(--bd);padding:.6rem .8rem;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:.65rem}
+    .cover{width:52px;height:52px;border-radius:50%;object-fit:cover}.title{font-weight:700}.time{color:var(--muted);font-size:.85rem}
+    .bar{height:6px;background:rgba(255,255,255,.18);border-radius:999px;overflow:hidden}.fill{height:100%;width:0;background:#fff}
+    .ctrl{display:flex;gap:.35rem}.ctrl button{border:1px solid var(--bd);background:transparent;color:#fff;border-radius:999px;padding:.3rem .55rem;cursor:pointer}
+    .contact{margin-top:.8rem;padding:.7rem;border:1px dashed var(--bd);border-radius:12px}.contact form{display:grid;gap:.45rem;margin-top:.45rem}
+    input,textarea{border:1px solid var(--bd);background:rgba(255,255,255,.04);border-radius:10px;padding:.55rem .62rem;color:#fff;font:inherit}.st{min-height:1.2em;color:#8ff7ca}
+    #cursor-effects-container{position:fixed;inset:0;pointer-events:none;z-index:999}
+    .cursor-effect-particle{position:absolute;width:8px;height:8px;border-radius:50%;transform:translate(-50%,-50%);animation:f .8s forwards}
+    @keyframes f{from{opacity:1;transform:translate(-50%,-50%) scale(1)}to{opacity:0;transform:translate(-50%,-50%) scale(.4)}}
+    @media (max-width:700px){.head{grid-template-columns:1fr;text-align:center;justify-items:center}.music{grid-template-columns:1fr}.ctrl{justify-content:center}}
   </style>
 </head>
 <body>
-  <main class="shell">
-    <section class="hero glass">
-      <img id="pfp" class="avatar" src="/uploads/default-pfp.svg" alt="pfp" />
-      <div class="hero-grid">
-        <div>
-          <p id="availability" class="tag">AVAILABLE NOW</p>
-          <h1>Hi, I'm <span id="name">Hade</span></h1>
-          <p id="description" class="muted">Loading...</p>
-          <p id="place" class="muted">📍 Morocco</p>
-          <div class="hero-actions">
-            <a class="btn" href="/admin">Admin</a>
-            <button id="music-toggle" class="btn" type="button">🔇 Music Off</button>
-          </div>
+  <video class="bgv" id="bgv" autoplay loop muted playsinline></video>
+  <div class="fallback"></div><div class="dots"></div>
+  <div id="cursor-effects-container"></div>
+
+  <main class="wrap">
+    <div class="promo">
+      <img src="/uploads/default-pfp.svg" alt="logo">
+      <a href="#"><b>emogir.ls/you</b><small>Claim your profile for free now!</small></a>
+    </div>
+
+    <section class="card" id="profile-card">
+      <div class="head">
+        <div class="avatarWrap">
+          <img id="pfp" class="avatar" src="/uploads/default-pfp.svg" alt="avatar">
+          <img id="deco" class="deco" src="" alt="decoration" style="display:none">
         </div>
-        <div class="mini-stats" id="quick-stats"></div>
+        <div>
+          <h1 class="u" id="name">Hade<span id="tw">|</span></h1>
+          <p class="desc" id="description">Im boring</p>
+        </div>
       </div>
-    </section>
 
-    <section class="grid2">
-      <div class="panel glass"><h2>Skills</h2><div id="skills" class="chips"></div></div>
-      <div class="panel glass"><h2>Links</h2><div id="links" class="links"></div></div>
-    </section>
+      <div class="about" id="about"></div>
 
-    <section class="panel glass"><h2>Projects</h2><div id="projects" class="projects"></div></section>
+      <article class="widget">
+        <div class="top">Weather</div>
+        <h3 id="city" style="margin:.25rem 0">Hamah</h3>
+        <div id="weather" class="desc">12°C • Clear</div>
+      </article>
 
-    <section class="panel glass">
-      <h2>Live Contact Form</h2>
-      <p class="banner">This is live — messages go straight to your backend inbox in admin.</p>
-      <form id="contact-form" class="contact">
-        <input id="contact-name" type="text" placeholder="Name" minlength="2" required />
-        <input id="contact-email" type="email" placeholder="Email" required />
-        <textarea id="contact-message" rows="4" placeholder="Message" minlength="4" required></textarea>
-        <button class="btn" type="submit">Send</button>
-      </form>
-      <p id="contact-status" class="status"></p>
+      <div class="links" id="links"></div>
+
+      <div class="meta">
+        <span>👁 <b id="views">8</b></span>
+        <span>|</span>
+        <span>📍 <b id="place">Earth</b></span>
+      </div>
+
+      <div class="music">
+        <img id="music-cover" class="cover" src="/uploads/default-pfp.svg" alt="cover">
+        <div>
+          <div class="title" id="music-title">im tired</div>
+          <div class="time"><span id="cur">0:00</span> / <span id="dur">0:00</span></div>
+          <div class="bar"><div class="fill" id="fill"></div></div>
+        </div>
+        <div class="ctrl">
+          <button id="play" type="button">Play</button>
+        </div>
+      </div>
+
+      <section class="contact">
+        <b>Message me</b>
+        <form id="contact-form">
+          <input id="cn" placeholder="name" required minlength="2">
+          <input id="ce" type="email" placeholder="email" required>
+          <textarea id="cm" rows="3" placeholder="message" required minlength="4"></textarea>
+          <button type="submit">Send</button>
+        </form>
+        <p class="st" id="st"></p>
+      </section>
     </section>
   </main>
 
-  <audio id="bg-music" loop></audio>
+  <audio id="audio"></audio>
   <script>
-    const byId=(id)=>document.getElementById(id);
-    async function api(path,opts){const r=await fetch(path,{...opts,headers:{'Content-Type':'application/json',...(opts&&opts.headers||{})}});const d=await r.json();if(!r.ok)throw new Error(d.error||'Request failed');return d}
-    function render(cfg){
-      document.documentElement.style.setProperty('--accent',cfg.accentColor||'#8e77ff');
-      byId('name').textContent=cfg.name||'Hade';
-      byId('description').textContent=cfg.description||'';
-      byId('place').textContent=`📍 ${cfg.place||''}`;
-      byId('availability').textContent=cfg.availability||'';
-      byId('pfp').src=cfg.pfp||'/uploads/default-pfp.svg';
+    const $=id=>document.getElementById(id);
+    async function j(path,opt){const r=await fetch(path,{...opt,headers:{'Content-Type':'application/json',...(opt&&opt.headers||{})}});const d=await r.json();if(!r.ok)throw new Error(d.error||'Request failed');return d}
 
-      byId('skills').innerHTML=(cfg.skills||[]).map(s=>`<span class="chip">${s}</span>`).join('');
-      byId('links').innerHTML=(cfg.links||[]).map(l=>`<a href="${l.url||'#'}" target="_blank" rel="noreferrer">${l.label||'Link'}</a>`).join('');
-      byId('projects').innerHTML=(cfg.projects||[]).map(p=>`<article class="project">${p.image?`<img src="${p.image}" alt="project image">`:''}<h3>${p.title||''}</h3><p>${p.description||''}</p></article>`).join('');
-
-      const stats=[
-        {label:'SKILLS',value:String((cfg.skills||[]).length)},
-        {label:'PROJECTS',value:String((cfg.projects||[]).length)},
-        {label:'LINKS',value:String((cfg.links||[]).length)}
-      ];
-      byId('quick-stats').innerHTML=stats.map(s=>`<div class="stat"><b>${s.value}</b><span>${s.label}</span></div>`).join('');
-
-      const audio=byId('bg-music'),btn=byId('music-toggle'); audio.src=cfg.music||''; let on=false;
-      btn.onclick=async()=>{if(!cfg.music){btn.textContent='No music URL';return;} if(on){audio.pause();on=false;btn.textContent='🔇 Music Off';return;} try{await audio.play();on=true;btn.textContent='🎵 Music On'}catch{btn.textContent='Click again'}};
+    function cursorFx(){
+      const c=$('cursor-effects-container');
+      addEventListener('mousemove',e=>{for(let i=0;i<2;i++){const p=document.createElement('div');p.className='cursor-effect-particle';p.style.left=e.clientX+(Math.random()*8-4)+'px';p.style.top=e.clientY+(Math.random()*8-4)+'px';p.style.background='radial-gradient(circle,#ffd700,#ff8c00)';c.appendChild(p);setTimeout(()=>p.remove(),800);}})
     }
 
-    byId('contact-form').addEventListener('submit',async(e)=>{
-      e.preventDefault();
-      const payload={name:byId('contact-name').value.trim(),email:byId('contact-email').value.trim(),message:byId('contact-message').value.trim()};
-      try{await api('/api/contact',{method:'POST',body:JSON.stringify(payload)});byId('contact-status').textContent='✅ Message sent';e.target.reset();}
-      catch(err){byId('contact-status').textContent=`❌ ${err.message}`;}
-    });
+    function render(cfg){
+      document.title=`@${cfg.name} | emogir.ls style`;
+      document.documentElement.style.setProperty('--accent',cfg.accentColor||'#fff');
+      $('name').childNodes[0].nodeValue=cfg.name||'hade133';
+      $('description').textContent=cfg.description||'';
+      $('pfp').src=cfg.pfp||'/uploads/default-pfp.svg';
+      if(cfg.avatarDecoration){$('deco').src=cfg.avatarDecoration;$('deco').style.display='block'}
+      $('views').textContent=cfg.views||0;
+      $('place').textContent=cfg.place||'Earth';
+      $('city').textContent=cfg.weatherCity||'Hamah';
+      $('weather').textContent=`${cfg.weatherTemp||''} • ${cfg.weatherCondition||''}`;
+      $('about').innerHTML=(cfg.aboutLines||[]).map(l=>`<p>${l}</p>`).join('');
+      $('links').innerHTML=(cfg.links||[]).map(l=>`<a href="${l.url||'#'}" target="_blank">${l.label||'Link'}</a>`).join('');
+      const card=$('profile-card'); card.style.backgroundColor=`rgba(0,0,0,${cfg.cardOpacity ?? .75})`;
+      if(cfg.video){$('bgv').src=cfg.video}
 
-    api('/api/config').then(render).catch(err=>{byId('contact-status').textContent=`❌ ${err.message}`});
+      $('music-title').textContent=cfg.musicTitle||'Track';
+      $('music-cover').src=cfg.musicCover||cfg.pfp||'/uploads/default-pfp.svg';
+      const a=$('audio'); a.src=cfg.music||'';
+    }
+
+    const a=$('audio');
+    $('play').onclick=async()=>{if(!a.src){$('play').textContent='No music';return;} if(a.paused){await a.play();$('play').textContent='Pause'}else{a.pause();$('play').textContent='Play'}};
+    a.ontimeupdate=()=>{const d=a.duration||0,c=a.currentTime||0;$('cur').textContent=`${Math.floor(c/60)}:${String(Math.floor(c%60)).padStart(2,'0')}`;$('dur').textContent=`${Math.floor(d/60)}:${String(Math.floor(d%60)).padStart(2,'0')}`;$('fill').style.width=d?`${(c/d)*100}%`:'0%'};
+
+    $('contact-form').onsubmit=async(e)=>{e.preventDefault();
+      try{await j('/api/contact',{method:'POST',body:JSON.stringify({name:$('cn').value.trim(),email:$('ce').value.trim(),message:$('cm').value.trim()})});$('st').textContent='✅ Sent';e.target.reset();}
+      catch(err){$('st').textContent='❌ '+err.message;}
+    }
+
+    setInterval(()=>{$('tw').style.visibility=$('tw').style.visibility==='hidden'?'visible':'hidden'},500);
+    cursorFx();
+    j('/api/config').then(render).catch(err=>{$('st').textContent='❌ '+err.message});
   </script>
 </body>
 </html>

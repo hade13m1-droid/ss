@@ -15,25 +15,37 @@ INDEX_PATH = BASE_DIR / "index.html"
 ADMIN_PATH = BASE_DIR / "admin.html"
 
 app = Flask(__name__)
-app.config["MAX_CONTENT_LENGTH"] = 8 * 1024 * 1024  # 8MB
+app.config["MAX_CONTENT_LENGTH"] = 8 * 1024 * 1024
 
 DEFAULT_CONFIG = {
-    "name": "Hade",
-    "description": "Cinematic portfolio with live backend + uploadable media.",
-    "place": "Morocco",
-    "availability": "AVAILABLE NOW",
+    "name": "hade133",
+    "description": "Im boring",
+    "aboutLines": [
+        "Still I breathe like I’m okay,",
+        "Same damn smile, different day.",
+        "Heart in pieces, walk it straight,",
+        "World keeps spinning... I imitate.",
+    ],
+    "place": "Earth",
+    "views": 8,
+    "availability": "ONLINE",
     "pfp": "/uploads/default-pfp.svg",
-    "heroImage": "",
+    "avatarDecoration": "",
+    "video": "",
     "music": "",
-    "accentColor": "#8e77ff",
-    "skills": ["UI/UX", "Frontend", "Motion", "Branding"],
+    "musicTitle": "im tired",
+    "musicCover": "",
+    "accentColor": "#ffffff",
+    "cardOpacity": 0.75,
+    "weatherCity": "Hamah",
+    "weatherTemp": "12°C",
+    "weatherCondition": "Clear",
     "links": [
-        {"label": "Instagram", "url": "#"},
-        {"label": "GitHub", "url": "#"},
+        {"label": "Guns.lol", "url": "https://guns.lol/_hade_"},
+        {"label": "GitHub", "url": "https://github.com/hade14dev-prog"},
     ],
     "projects": [
-        {"title": "Project One", "description": "A premium landing concept.", "image": ""},
-        {"title": "Project Two", "description": "Interactive creator profile.", "image": ""},
+        {"title": "Aesthetic Profile", "description": "Dark cinematic profile card.", "image": ""}
     ],
 }
 
@@ -97,7 +109,10 @@ def get_config() -> dict:
         raw = json.loads(row["value"])
         if not isinstance(raw, dict):
             return dict(DEFAULT_CONFIG)
-        return {**DEFAULT_CONFIG, **raw}
+        merged = {**DEFAULT_CONFIG, **raw}
+        if not isinstance(merged.get("aboutLines"), list):
+            merged["aboutLines"] = DEFAULT_CONFIG["aboutLines"]
+        return merged
     except json.JSONDecodeError:
         return dict(DEFAULT_CONFIG)
 
@@ -154,7 +169,7 @@ def api_upload():
         return jsonify({"error": "Empty filename"}), 400
 
     ext = Path(file.filename).suffix.lower()
-    allowed = {".png", ".jpg", ".jpeg", ".webp", ".gif", ".svg"}
+    allowed = {".png", ".jpg", ".jpeg", ".webp", ".gif", ".svg", ".mp4", ".mp3"}
     if ext not in allowed:
         return jsonify({"error": "Unsupported file type"}), 400
 

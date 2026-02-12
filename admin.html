@@ -1,225 +1,99 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Hade Admin Panel</title>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Admin | emogir.ls style</title>
   <style>
-    :root{--bg:#080b18;--panel:rgba(11,16,28,.82);--line:rgba(255,255,255,.14);--text:#f5f7ff;--muted:#b5bfdc;--accent:#8e77ff;--ok:#96ffd0;--bad:#ff8ea8}
-    *{box-sizing:border-box}
-    body{margin:0;min-height:100vh;font-family:Inter,system-ui;color:var(--text);background:radial-gradient(circle at top,#1b2050 0,#090d1d 60%)}
-    .shell{width:min(1150px,100%);margin:1rem auto;padding:1rem;border:1px solid var(--line);border-radius:22px;background:linear-gradient(130deg,rgba(142,119,255,.14),rgba(142,119,255,.02)),var(--panel);box-shadow:0 18px 50px rgba(0,0,0,.42)}
-    .topbar{display:flex;justify-content:space-between;align-items:center;gap:.8rem;flex-wrap:wrap}
-    .status{min-height:1.2em;color:var(--ok)}
-    .layout{display:grid;grid-template-columns:1.2fr .8fr;gap:1rem}
-    .card{border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.03);padding:.8rem}
-    .tabs{display:flex;flex-wrap:wrap;gap:.5rem;margin:.6rem 0}
-    .tab{border:1px solid var(--line);border-radius:999px;padding:.4rem .75rem;background:rgba(255,255,255,.03);cursor:pointer}
-    .tab.active{border-color:var(--accent);box-shadow:0 8px 20px rgba(142,119,255,.28)}
-    .pane{display:none}.pane.active{display:block}
-    .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.55rem}.full{grid-column:1/-1}
-    label{display:grid;gap:.3rem;color:var(--muted);font-size:.9rem}
-    input,textarea{border-radius:12px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:var(--text);padding:.6rem .68rem;font:inherit}
-    .actions,.upload-row{display:flex;flex-wrap:wrap;gap:.5rem}
-    .btn{border:1px solid var(--line);border-radius:999px;padding:.45rem .8rem;background:rgba(255,255,255,.03);color:var(--text);text-decoration:none;cursor:pointer;transition:.18s ease}
-    .btn:hover{transform:translateY(-1px);border-color:var(--accent)}
-    .preview{width:96px;height:96px;border-radius:12px;object-fit:cover;border:1px solid var(--line)}
-    .small{font-size:.84rem;color:var(--muted)}
-    .search{width:100%}
-    .messages{display:grid;gap:.5rem;margin-top:.55rem;max-height:600px;overflow:auto}
-    .message{border:1px solid var(--line);border-radius:12px;padding:.6rem;background:rgba(255,255,255,.03)}
-    .top{display:flex;justify-content:space-between;gap:.5rem;font-size:.83rem;color:var(--muted)}
-    .inline-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:.5rem;margin:.6rem 0}
-    .s{border:1px solid var(--line);border-radius:12px;padding:.45rem .55rem;background:rgba(255,255,255,.02)}
-    .s b{display:block;font-size:1.05rem}
+    :root{--bg:#0b0f1f;--panel:rgba(0,0,0,.62);--line:rgba(255,255,255,.14);--txt:#fff;--muted:rgba(255,255,255,.72);--ok:#8ff7ca;--bad:#ff8ea8}
+    *{box-sizing:border-box}body{margin:0;font-family:Inter,system-ui;background:radial-gradient(circle at 10% 10%,#20295a,#0b0f1f 65%);color:var(--txt)}
+    .shell{max-width:1150px;margin:16px auto;padding:12px}.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:12px;backdrop-filter:blur(10px)}
+    .top{display:flex;justify-content:space-between;gap:.5rem;align-items:center;flex-wrap:wrap}.actions{display:flex;flex-wrap:wrap;gap:.5rem}
+    .btn{border:1px solid var(--line);background:rgba(255,255,255,.04);color:#fff;border-radius:999px;padding:.45rem .8rem;cursor:pointer;text-decoration:none}
+    .layout{display:grid;grid-template-columns:1.25fr .75fr;gap:1rem;margin-top:1rem}.grid{display:grid;grid-template-columns:1fr 1fr;gap:.55rem}
+    label{display:grid;gap:.3rem;color:var(--muted);font-size:.9rem}input,textarea{border:1px solid var(--line);background:rgba(255,255,255,.03);color:#fff;border-radius:10px;padding:.55rem .62rem;font:inherit}
+    .full{grid-column:1/-1}.upload{display:flex;gap:.45rem;align-items:center;flex-wrap:wrap}.preview{width:84px;height:84px;border-radius:12px;object-fit:cover;border:1px solid var(--line)}
+    .status{min-height:1.2em;color:var(--ok)}.msg{border:1px solid var(--line);border-radius:10px;padding:.5rem;background:rgba(255,255,255,.03)}.meta{font-size:.8rem;color:var(--muted);display:flex;justify-content:space-between}
+    .msgs{display:grid;gap:.45rem;max-height:70vh;overflow:auto}.small{font-size:.82rem;color:var(--muted)}
     @media (max-width:980px){.layout{grid-template-columns:1fr}.grid{grid-template-columns:1fr}}
   </style>
 </head>
 <body>
   <main class="shell">
-    <div class="topbar">
-      <h1>⚙️ Admin Panel</h1>
-      <div class="actions">
-        <button id="reload" class="btn" type="button">Reload</button>
-        <button id="refresh" class="btn" type="button">Refresh Inbox</button>
-        <a class="btn" href="/">Open Portfolio</a>
+    <section class="card">
+      <div class="top">
+        <h1 style="margin:0">⚙ Admin Panel</h1>
+        <div class="actions">
+          <button id="reload" class="btn" type="button">Reload</button>
+          <button id="refresh" class="btn" type="button">Refresh Inbox</button>
+          <a class="btn" href="/">Open Profile</a>
+        </div>
       </div>
-    </div>
-    <p class="status" id="status"></p>
+      <p class="status" id="status"></p>
+    </section>
 
-    <div class="layout">
-      <section class="card">
-        <div class="tabs">
-          <button class="tab active" data-pane="identity" type="button">Identity</button>
-          <button class="tab" data-pane="content" type="button">Content</button>
-          <button class="tab" data-pane="media" type="button">Media</button>
+    <section class="layout">
+      <form id="f" class="card grid">
+        <label>Name <input id="name"></label>
+        <label>Description <input id="description"></label>
+        <label>Place <input id="place"></label>
+        <label>Views <input id="views" type="number" min="0"></label>
+        <label>Availability <input id="availability"></label>
+        <label>Accent Color <input id="accentColor" placeholder="#ffffff"></label>
+        <label>Card Opacity (0-1) <input id="cardOpacity" type="number" min="0" max="1" step="0.05"></label>
+        <label>Music Title <input id="musicTitle"></label>
+        <label>Music URL <input id="music"></label>
+        <label>Video URL <input id="video"></label>
+        <label>PFP URL <input id="pfp"></label>
+        <label>Avatar Decoration URL <input id="avatarDecoration"></label>
+        <label>Music Cover URL <input id="musicCover"></label>
+        <label>Weather City <input id="weatherCity"></label>
+        <label>Weather Temp <input id="weatherTemp"></label>
+        <label class="full">Weather Condition <input id="weatherCondition"></label>
+
+        <label class="full">About lines (one per line)<textarea id="aboutLines" rows="5"></textarea></label>
+        <label class="full">Links JSON<textarea id="links" rows="6"></textarea></label>
+        <label class="full">Projects JSON<textarea id="projects" rows="7"></textarea></label>
+
+        <div class="full upload">
+          <img id="p" class="preview" src="/uploads/default-pfp.svg" alt="pfp preview">
+          <input id="pfpFile" type="file" accept="image/*">
+          <button id="upPfp" type="button" class="btn">Upload PFP</button>
+          <input id="genericFile" type="file" accept="image/*,video/mp4,audio/mpeg,audio/mp3">
+          <button id="upAny" type="button" class="btn">Upload Media</button>
+          <input id="uploadedUrl" placeholder="uploaded URL" style="min-width:260px">
         </div>
 
-        <form id="admin-form">
-          <div id="pane-identity" class="pane active">
-            <div class="grid">
-              <label>Name <input id="name" type="text" /></label>
-              <label>Availability <input id="availability" type="text" /></label>
-              <label>Place <input id="place" type="text" /></label>
-              <label>Accent Color <input id="accentColor" type="text" placeholder="#8e77ff" /></label>
-              <label class="full">Description <textarea id="description" rows="3"></textarea></label>
-            </div>
-          </div>
+        <div class="full actions"><button class="btn" type="submit">Save Config</button></div>
+      </form>
 
-          <div id="pane-content" class="pane">
-            <div class="grid">
-              <label class="full">Skills (comma separated)<input id="skills" type="text" /></label>
-              <label class="full">Links JSON<textarea id="links" rows="5"></textarea></label>
-              <label class="full">Projects JSON (supports image field)<textarea id="projects" rows="8"></textarea></label>
-            </div>
-          </div>
-
-          <div id="pane-media" class="pane">
-            <div class="grid">
-              <label>Music URL <input id="music" type="url" /></label>
-              <label>PFP URL <input id="pfp" type="text" /></label>
-              <div class="full upload-row">
-                <img id="pfp-preview" class="preview" src="/uploads/default-pfp.svg" alt="pfp preview" />
-                <input id="pfp-file" type="file" accept="image/*" />
-                <button id="upload-pfp" class="btn" type="button">Upload PFP</button>
-              </div>
-              <div class="full upload-row">
-                <input id="project-file" type="file" accept="image/*" />
-                <button id="upload-project" class="btn" type="button">Upload Project Image</button>
-                <input id="project-image-output" type="text" placeholder="Uploaded project image URL appears here" />
-              </div>
-            </div>
-          </div>
-
-          <div class="actions" style="margin-top:.7rem">
-            <button class="btn" type="submit">Save</button>
-          </div>
-        </form>
-      </section>
-
-      <section class="card">
-        <h2>📨 Inbox</h2>
-        <div class="inline-stats" id="inbox-stats"></div>
-        <input id="search" class="search" type="text" placeholder="Search by name, email, or text..." />
-        <p class="small">Tip: use search to quickly find a message.</p>
-        <div id="messages" class="messages"></div>
-      </section>
-    </div>
+      <aside class="card">
+        <h2 style="margin:.1rem 0 .4rem">Inbox</h2>
+        <input id="q" placeholder="search messages..." class="full" style="width:100%">
+        <p class="small" id="count"></p>
+        <div id="msgs" class="msgs"></div>
+      </aside>
+    </section>
   </main>
 
   <script>
-    const byId=(id)=>document.getElementById(id);
-    let allMessages=[];
+    const $=id=>document.getElementById(id); let all=[];
+    const ids=['name','description','place','views','availability','accentColor','cardOpacity','musicTitle','music','video','pfp','avatarDecoration','musicCover','weatherCity','weatherTemp','weatherCondition'];
+    function status(t,ok=true){$('status').style.color=ok?'#8ff7ca':'#ff8ea8';$('status').textContent=t}
+    async function api(path,opt={}){const r=await fetch(path,opt);const ct=r.headers.get('content-type')||'';const d=ct.includes('json')?await r.json():{};if(!r.ok)throw new Error(d.error||'Request failed');return d}
+    function fill(c){ids.forEach(id=>$(id).value=(c[id]??''));$('aboutLines').value=(c.aboutLines||[]).join('\n');$('links').value=JSON.stringify(c.links||[],null,2);$('projects').value=JSON.stringify(c.projects||[],null,2);$('p').src=c.pfp||'/uploads/default-pfp.svg'}
+    function collect(){const o={};ids.forEach(id=>o[id]=$(id).value);o.views=Number(o.views||0);o.cardOpacity=Number(o.cardOpacity||0.75);o.aboutLines=$('aboutLines').value.split('\n').map(x=>x.trim()).filter(Boolean);o.links=JSON.parse($('links').value||'[]');o.projects=JSON.parse($('projects').value||'[]');return o}
+    async function upload(file){const f=file.files&&file.files[0];if(!f) throw new Error('Choose a file');const fd=new FormData();fd.append('file',f);const res=await fetch('/api/upload',{method:'POST',body:fd});const d=await res.json();if(!res.ok)throw new Error(d.error||'upload failed');return d.url}
+    function renderMsgs(items){$('count').textContent=`${items.length} messages`; $('msgs').innerHTML=items.map(m=>`<article class='msg'><div class='meta'><span><b>${m.name}</b> • ${m.email}</span><span>${new Date(m.created_at).toLocaleString()}</span></div><p>${m.message}</p></article>`).join('')||'<p class="small">No messages yet.</p>'}
+    function filter(){const q=$('q').value.toLowerCase().trim();renderMsgs(!q?all:all.filter(m=>`${m.name} ${m.email} ${m.message}`.toLowerCase().includes(q)))}
+    async function load(){const c=await api('/api/config');fill(c);all=await api('/api/messages');filter()}
 
-    function setStatus(text,ok=true){const s=byId('status');s.style.color=ok?'#96ffd0':'#ff8ea8';s.textContent=text;}
-    async function api(path,opts={}){const r=await fetch(path,opts);const ct=r.headers.get('content-type')||'';const d=ct.includes('json')?await r.json():{};if(!r.ok)throw new Error(d.error||'Request failed');return d}
-
-    function bindTabs(){
-      document.querySelectorAll('.tab').forEach(btn=>btn.onclick=()=>{
-        document.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t===btn));
-        const key=btn.dataset.pane;
-        document.querySelectorAll('.pane').forEach(p=>p.classList.toggle('active',p.id===`pane-${key}`));
-      });
-    }
-
-    function fill(cfg){
-      byId('name').value=cfg.name||'';
-      byId('availability').value=cfg.availability||'';
-      byId('place').value=cfg.place||'';
-      byId('accentColor').value=cfg.accentColor||'';
-      byId('description').value=cfg.description||'';
-      byId('music').value=cfg.music||'';
-      byId('pfp').value=cfg.pfp||'';
-      byId('pfp-preview').src=cfg.pfp||'/uploads/default-pfp.svg';
-      byId('skills').value=(cfg.skills||[]).join(', ');
-      byId('links').value=JSON.stringify(cfg.links||[],null,2);
-      byId('projects').value=JSON.stringify(cfg.projects||[],null,2);
-    }
-
-    function collect(){
-      return {
-        name:byId('name').value.trim(),
-        availability:byId('availability').value.trim(),
-        place:byId('place').value.trim(),
-        accentColor:byId('accentColor').value.trim(),
-        description:byId('description').value.trim(),
-        music:byId('music').value.trim(),
-        pfp:byId('pfp').value.trim(),
-        skills:byId('skills').value.split(',').map(x=>x.trim()).filter(Boolean),
-        links:JSON.parse(byId('links').value),
-        projects:JSON.parse(byId('projects').value)
-      }
-    }
-
-    async function upload(fileInput){
-      const f=fileInput.files&&fileInput.files[0];
-      if(!f) throw new Error('Choose a file first');
-      const fd=new FormData();
-      fd.append('file',f);
-      const res=await fetch('/api/upload',{method:'POST',body:fd});
-      const d=await res.json();
-      if(!res.ok) throw new Error(d.error||'Upload failed');
-      return d.url;
-    }
-
-    function renderInboxStats(messages){
-      const total=messages.length;
-      const uniqueEmails=new Set(messages.map(m=>m.email)).size;
-      const today=messages.filter(m=>{
-        const d=new Date(m.created_at); const n=new Date();
-        return d.getFullYear()===n.getFullYear() && d.getMonth()===n.getMonth() && d.getDate()===n.getDate();
-      }).length;
-      byId('inbox-stats').innerHTML=`
-        <div class="s"><b>${total}</b><span class="small">Total</span></div>
-        <div class="s"><b>${uniqueEmails}</b><span class="small">Unique Emails</span></div>
-        <div class="s"><b>${today}</b><span class="small">Today</span></div>
-      `;
-    }
-
-    function renderMessages(messages){
-      renderInboxStats(messages);
-      byId('messages').innerHTML=messages.map(m=>`<article class="message"><div class="top"><span><b>${m.name}</b> • ${m.email}</span><span>${new Date(m.created_at).toLocaleString()}</span></div><p>${m.message}</p></article>`).join('') || '<p class="small">No messages yet.</p>';
-    }
-
-    function filterMessages(){
-      const q=byId('search').value.trim().toLowerCase();
-      if(!q){renderMessages(allMessages);return;}
-      const filtered=allMessages.filter(m=>`${m.name} ${m.email} ${m.message}`.toLowerCase().includes(q));
-      renderMessages(filtered);
-    }
-
-    async function loadAll(){
-      const cfg=await api('/api/config');
-      fill(cfg);
-      allMessages=await api('/api/messages');
-      renderMessages(allMessages);
-    }
-
-    byId('upload-pfp').onclick=async()=>{
-      try{const url=await upload(byId('pfp-file'));byId('pfp').value=url;byId('pfp-preview').src=url;setStatus('PFP uploaded. Click Save.');}
-      catch(e){setStatus(e.message,false)}
-    };
-
-    byId('upload-project').onclick=async()=>{
-      try{const url=await upload(byId('project-file'));byId('project-image-output').value=url;setStatus('Project image uploaded. Put URL in projects JSON image field.');}
-      catch(e){setStatus(e.message,false)}
-    };
-
-    byId('admin-form').onsubmit=async(e)=>{
-      e.preventDefault();
-      try{
-        const payload=collect();
-        await api('/api/config',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
-        setStatus('Saved live config ✅');
-      }catch(err){setStatus(err.message,false)}
-    };
-
-    byId('reload').onclick=()=>loadAll().then(()=>setStatus('Reloaded')).catch(e=>setStatus(e.message,false));
-    byId('refresh').onclick=()=>loadAll().then(()=>setStatus('Inbox refreshed')).catch(e=>setStatus(e.message,false));
-    byId('search').oninput=filterMessages;
-
-    bindTabs();
-    loadAll().catch(e=>setStatus(e.message,false));
+    $('upPfp').onclick=async()=>{try{const u=await upload($('pfpFile'));$('pfp').value=u;$('p').src=u;status('PFP uploaded; save config.')}catch(e){status(e.message,false)}};
+    $('upAny').onclick=async()=>{try{const u=await upload($('genericFile'));$('uploadedUrl').value=u;status('Media uploaded. Copy URL into any field/json.')}catch(e){status(e.message,false)}};
+    $('f').onsubmit=async(e)=>{e.preventDefault();try{await api('/api/config',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(collect())});status('Saved ✅')}catch(err){status(err.message,false)}};
+    $('reload').onclick=()=>load().then(()=>status('Reloaded')).catch(e=>status(e.message,false));
+    $('refresh').onclick=()=>load().then(()=>status('Inbox refreshed')).catch(e=>status(e.message,false));
+    $('q').oninput=filter;
+    load().catch(e=>status(e.message,false));
   </script>
 </body>
 </html>
