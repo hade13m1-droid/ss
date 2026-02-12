@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hade Admin — Live Backend</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700;800&family=Space+Grotesk:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}" />
+  </head>
+  <body class="admin-body">
+    <main class="admin-shell glass">
+      <header>
+        <h1>⚙️ Hade Admin</h1>
+        <p class="muted">Live Flask-powered settings + message inbox.</p>
+      </header>
+
+      <form id="admin-form" class="admin-grid">
+        <label>Name <input id="name" type="text" /></label>
+        <label>Availability <input id="availability" type="text" /></label>
+        <label>Place <input id="place" type="text" /></label>
+        <label>Profile URL <input id="pfp" type="url" /></label>
+        <label>Music URL <input id="music" type="url" /></label>
+        <label>Accent Color <input id="accentColor" type="text" placeholder="#8e77ff" /></label>
+        <label class="full">Description <textarea id="description" rows="3"></textarea></label>
+        <label class="full">Skills (comma separated) <input id="skills" type="text" /></label>
+        <label class="full">Links JSON <textarea id="links" rows="5"></textarea></label>
+        <label class="full">Projects JSON <textarea id="projects" rows="6"></textarea></label>
+
+        <div class="full actions">
+          <button class="btn" type="submit">Save Live</button>
+          <button id="reload-config" class="btn" type="button">Reload</button>
+          <a class="btn" href="/">Open Portfolio</a>
+        </div>
+      </form>
+
+      <p id="admin-status" class="status"></p>
+
+      <section class="inbox">
+        <h2>📨 Live Inbox</h2>
+        <button id="refresh-messages" class="btn" type="button">Refresh Messages</button>
+        <div id="messages" class="messages"></div>
+      </section>
+    </main>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+  </body>
+</html>
