@@ -3,96 +3,106 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#1b1b1b">
-  <title>@hade133 | emogir.ls style</title>
+  <meta name="theme-color" content="#090a12">
+  <title>@hade133 | profile</title>
   <style>
-    :root{--txt:#fff;--muted:rgba(255,255,255,.75);--card:rgba(0,0,0,.75);--bd:rgba(255,255,255,.12);--accent:#fff}
-    *{box-sizing:border-box} body{margin:0;color:var(--txt);font-family:Inter,system-ui;background:#111;min-height:100vh;overflow-x:hidden}
-    .bgv{position:fixed;inset:0;width:100%;height:100%;object-fit:cover;z-index:-3}.fallback{position:fixed;inset:0;z-index:-4;background:radial-gradient(circle at 20% 20%,#2a2a3d,#111 65%)}
-    .dots{position:fixed;inset:0;z-index:-2;opacity:.23;background-image:radial-gradient(rgba(255,255,255,.5) 1px,transparent 1px);background-size:3px 3px}
-    .wrap{max-width:760px;margin:20px auto;padding:10px}
-    .promo{display:flex;gap:.55rem;align-items:center;padding:.55rem .7rem;background:rgba(0,0,0,.55);border:1px solid var(--bd);border-radius:10px}
-    .promo img{width:38px;height:38px;border-radius:10px;object-fit:cover}.promo a{color:#fff;text-decoration:none}.promo small{display:block;color:var(--muted)}
-    .card{margin-top:10px;background:var(--card);backdrop-filter:blur(18px);border:1px solid var(--bd);border-radius:20px;padding:1rem;box-shadow:0 15px 44px rgba(0,0,0,.5)}
-    .head{display:grid;grid-template-columns:auto 1fr;gap:.8rem;align-items:center}.avatarWrap{position:relative}
-    .avatar{width:112px;height:112px;border-radius:50%;object-fit:cover;border:2px solid rgba(255,255,255,.2)}
-    .deco{position:absolute;inset:0;width:112px;height:112px;object-fit:cover;pointer-events:none}
-    .u{margin:0;font-size:1.75rem;filter:drop-shadow(0 0 9px rgba(255,255,255,.75));color:var(--accent)} .desc{margin:.35rem 0 0;color:var(--muted)}
-    .about{margin-top:.75rem;border-radius:18px;padding:.7rem;border:1px solid var(--bd);background:rgba(43,17,17,.08)} .about p{margin:.2rem 0}
-    .widget{margin-top:.75rem;border:1px solid rgba(69,74,160,.35);background:rgba(8,8,8,.82);border-radius:8px;padding:.7rem}
-    .widget .top{font-size:.88rem;color:var(--muted)}
-    .links{margin-top:.75rem;display:flex;gap:.55rem;flex-wrap:wrap}.links a{display:inline-flex;align-items:center;gap:.3rem;padding:.45rem .65rem;border:1px solid var(--bd);border-radius:999px;text-decoration:none;color:#fff;background:rgba(255,255,255,.03)}
-    .meta{margin-top:.75rem;display:flex;gap:.55rem;align-items:center;color:var(--muted);font-size:.9rem}
-    .music{margin-top:.75rem;border-radius:50px;background:rgba(0,0,0,.45);border:1px solid var(--bd);padding:.6rem .8rem;display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:.65rem}
-    .cover{width:52px;height:52px;border-radius:50%;object-fit:cover}.title{font-weight:700}.time{color:var(--muted);font-size:.85rem}
-    .bar{height:6px;background:rgba(255,255,255,.18);border-radius:999px;overflow:hidden}.fill{height:100%;width:0;background:#fff}
-    .ctrl{display:flex;gap:.35rem}.ctrl button{border:1px solid var(--bd);background:transparent;color:#fff;border-radius:999px;padding:.3rem .55rem;cursor:pointer}
-    .contact{margin-top:.8rem;padding:.7rem;border:1px dashed var(--bd);border-radius:12px}.contact form{display:grid;gap:.45rem;margin-top:.45rem}
-    input,textarea{border:1px solid var(--bd);background:rgba(255,255,255,.04);border-radius:10px;padding:.55rem .62rem;color:#fff;font:inherit}.st{min-height:1.2em;color:#8ff7ca}
+    :root{--txt:#fff;--muted:rgba(255,255,255,.74);--line:rgba(255,255,255,.16);--card:rgba(6,7,14,.64);--accent:#ffffff;--ok:#98f8cf}
+    *{box-sizing:border-box}
+    body{margin:0;min-height:100vh;overflow-x:hidden;color:var(--txt);font-family:Inter,ui-sans-serif,system-ui,Segoe UI,Roboto;background:#090a12}
+
+    .bgv,.layer{position:fixed;inset:0}
+    .bgv{width:100%;height:100%;object-fit:cover;z-index:-7;filter:brightness(.56) saturate(1.18) contrast(1.08)}
+    .grad{z-index:-8;background:radial-gradient(circle at 18% 12%,#2b2f67,#090a12 56%,#05060c)}
+    .dots{z-index:-6;opacity:.23;background-image:radial-gradient(rgba(255,255,255,.42) 1px,transparent 1px);background-size:3px 3px}
+    .grid{z-index:-5;opacity:.16;background-image:linear-gradient(to right,rgba(255,255,255,.15) 1px,transparent 1px),linear-gradient(to bottom,rgba(255,255,255,.12) 1px,transparent 1px);background-size:52px 52px;mask-image:radial-gradient(circle at center,#000 26%,transparent 100%)}
+    .vignette{z-index:-4;background:radial-gradient(circle at center,transparent 20%,rgba(0,0,0,.6) 100%)}
+    .orb{position:fixed;border-radius:50%;filter:blur(60px);pointer-events:none;opacity:.45;z-index:-3;animation:float 8s ease-in-out infinite}
+    .o1{width:260px;height:260px;left:-90px;top:10%;background:#7f5af0}
+    .o2{width:300px;height:300px;right:-120px;bottom:8%;background:#3da9fc;animation-delay:-3s}
+    @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(22px)}}
+
+    .wrap{max-width:870px;margin:18px auto;padding:10px}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:24px;padding:1rem;backdrop-filter:blur(18px);box-shadow:0 22px 65px rgba(0,0,0,.6), inset 0 0 0 1px rgba(255,255,255,.06);animation:up .6s ease both}
+    @keyframes up{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+
+    .head{display:grid;grid-template-columns:auto 1fr auto;gap:1rem;align-items:center}
+    .avatarWrap{position:relative;width:116px;height:116px}
+    .avatar{width:116px;height:116px;border-radius:50%;object-fit:cover;border:2px solid rgba(255,255,255,.2);box-shadow:0 0 0 8px rgba(255,255,255,.04),0 0 26px rgba(255,255,255,.18)}
+    .deco{position:absolute;inset:0;width:116px;height:116px;object-fit:cover;pointer-events:none}
+    .u{margin:0;font-size:2rem;color:var(--accent);text-shadow:0 0 22px color-mix(in oklab,var(--accent) 45%,transparent)}
+    .desc{margin:.35rem 0 0;color:var(--muted);min-height:1.4em}
+    .chip{padding:.35rem .62rem;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.06);letter-spacing:.08em;font-size:.74rem}
+
+    .about,.widget,.projects,.contact{margin-top:.85rem;border:1px solid var(--line);border-radius:15px;padding:.82rem;background:linear-gradient(130deg,rgba(255,255,255,.05),rgba(255,255,255,.01))}
+    .about p{margin:.2rem 0}
+    .top{font-size:.78rem;color:var(--muted);letter-spacing:.11em;text-transform:uppercase}
+    .stats{margin-top:.85rem;display:grid;grid-template-columns:1fr 1fr;gap:.62rem}
+    .stat{border:1px solid var(--line);border-radius:12px;padding:.7rem;background:rgba(0,0,0,.25)}
+
+    .links{margin-top:.8rem;display:flex;gap:.5rem;flex-wrap:wrap}
+    .links a{padding:.46rem .7rem;border:1px solid var(--line);border-radius:999px;text-decoration:none;color:#fff;background:rgba(255,255,255,.04);transition:.18s}
+    .links a:hover{transform:translateY(-2px);border-color:rgba(255,255,255,.4);box-shadow:0 10px 22px rgba(0,0,0,.35)}
+
+    .projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:.62rem;margin-top:.55rem}
+    .project{border:1px solid var(--line);border-radius:12px;overflow:hidden;background:rgba(255,255,255,.03)}
+    .project img{display:block;width:100%;height:104px;object-fit:cover}
+    .project .bd{padding:.5rem}
+    .project .bd p{margin:.22rem 0 0;color:var(--muted);font-size:.88rem}
+
+    .music{margin-top:.9rem;padding:.66rem .8rem;border-radius:999px;border:1px solid var(--line);background:rgba(0,0,0,.45);display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:.7rem}
+    .cover{width:52px;height:52px;border-radius:50%;object-fit:cover;border:1px solid var(--line)}
+    .time{font-size:.84rem;color:var(--muted)}
+    .bar{height:6px;border-radius:999px;background:rgba(255,255,255,.17);overflow:hidden}
+    .fill{height:100%;width:0;background:var(--accent)}
+    .ctrl{display:flex;gap:.35rem}
+    .btn{border:1px solid var(--line);background:rgba(255,255,255,.05);color:#fff;border-radius:999px;padding:.34rem .58rem;cursor:pointer}
+
+    .contact form{display:grid;gap:.45rem;margin-top:.5rem}
+    input,textarea{font:inherit;color:#fff;background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:10px;padding:.56rem .62rem}
+    input:focus,textarea:focus{outline:none;border-color:rgba(255,255,255,.35);box-shadow:0 0 0 3px rgba(255,255,255,.08)}
+    .st{min-height:1.2em;color:var(--ok)}
+
     #cursor-effects-container{position:fixed;inset:0;pointer-events:none;z-index:999}
-    .cursor-effect-particle{position:absolute;width:8px;height:8px;border-radius:50%;transform:translate(-50%,-50%);animation:f .8s forwards}
-    @keyframes f{from{opacity:1;transform:translate(-50%,-50%) scale(1)}to{opacity:0;transform:translate(-50%,-50%) scale(.4)}}
-    @media (max-width:700px){.head{grid-template-columns:1fr;text-align:center;justify-items:center}.music{grid-template-columns:1fr}.ctrl{justify-content:center}}
+    .particle{position:absolute;width:8px;height:8px;border-radius:50%;transform:translate(-50%,-50%);background:radial-gradient(circle,#fff,var(--accent));animation:particle .8s forwards}
+    @keyframes particle{to{opacity:0;transform:translate(-50%,-85%) scale(.4)}}
+
+    @media (max-width:760px){.head{grid-template-columns:1fr;text-align:center;justify-items:center}.stats{grid-template-columns:1fr}.music{grid-template-columns:1fr;border-radius:18px}.ctrl{justify-content:center}}
   </style>
 </head>
 <body>
   <video class="bgv" id="bgv" autoplay loop muted playsinline></video>
-  <div class="fallback"></div><div class="dots"></div>
+  <div class="layer grad"></div><div class="layer dots"></div><div class="layer grid"></div><div class="layer vignette"></div>
+  <div class="orb o1"></div><div class="orb o2"></div>
   <div id="cursor-effects-container"></div>
 
   <main class="wrap">
-    <div class="promo">
-      <img src="/uploads/default-pfp.svg" alt="logo">
-      <a href="#"><b>emogir.ls/you</b><small>Claim your profile for free now!</small></a>
-    </div>
-
     <section class="card" id="profile-card">
       <div class="head">
-        <div class="avatarWrap">
-          <img id="pfp" class="avatar" src="/uploads/default-pfp.svg" alt="avatar">
-          <img id="deco" class="deco" src="" alt="decoration" style="display:none">
-        </div>
-        <div>
-          <h1 class="u" id="name">Hade<span id="tw">|</span></h1>
-          <p class="desc" id="description">Im boring</p>
-        </div>
+        <div class="avatarWrap"><img id="pfp" class="avatar" src="/uploads/default-pfp.svg" alt="avatar"><img id="deco" class="deco" src="" alt="decoration" style="display:none"></div>
+        <div><h1 class="u" id="name">Hade<span id="tw">|</span></h1><p class="desc" id="description">Im boring</p></div>
+        <span id="availability" class="chip">ONLINE</span>
       </div>
 
       <div class="about" id="about"></div>
+      <article class="widget"><div class="top">Weather</div><h3 id="city" style="margin:.28rem 0">Hamah</h3><div id="weather" class="desc">12°C • Clear</div></article>
 
-      <article class="widget">
-        <div class="top">Weather</div>
-        <h3 id="city" style="margin:.25rem 0">Hamah</h3>
-        <div id="weather" class="desc">12°C • Clear</div>
-      </article>
-
+      <div class="stats"><div class="stat">👁 Views<br><b id="views">8</b></div><div class="stat">📍 Place<br><b id="place">Earth</b></div></div>
       <div class="links" id="links"></div>
 
-      <div class="meta">
-        <span>👁 <b id="views">8</b></span>
-        <span>|</span>
-        <span>📍 <b id="place">Earth</b></span>
-      </div>
+      <section class="projects"><div class="top">Featured projects</div><div id="projects" class="projects-grid"></div></section>
 
-      <div class="music">
+      <section class="music" id="music-wrap" style="display:none">
         <img id="music-cover" class="cover" src="/uploads/default-pfp.svg" alt="cover">
-        <div>
-          <div class="title" id="music-title">im tired</div>
-          <div class="time"><span id="cur">0:00</span> / <span id="dur">0:00</span></div>
-          <div class="bar"><div class="fill" id="fill"></div></div>
-        </div>
-        <div class="ctrl">
-          <button id="play" type="button">Play</button>
-        </div>
-      </div>
+        <div><div id="music-title"><b>Track</b></div><div class="time"><span id="cur">0:00</span> / <span id="dur">0:00</span></div><div class="bar"><div class="fill" id="fill"></div></div></div>
+        <div class="ctrl"><button id="play" type="button" class="btn">Play</button></div>
+      </section>
 
       <section class="contact">
         <b>Message me</b>
         <form id="contact-form">
-          <input id="cn" placeholder="name" required minlength="2">
-          <input id="ce" type="email" placeholder="email" required>
+          <input id="cn" placeholder="name" required minlength="2"><input id="ce" type="email" placeholder="email" required>
           <textarea id="cm" rows="3" placeholder="message" required minlength="4"></textarea>
-          <button type="submit">Send</button>
+          <button type="submit" class="btn" style="justify-self:start">Send</button>
         </form>
         <p class="st" id="st"></p>
       </section>
@@ -102,45 +112,47 @@
   <audio id="audio"></audio>
   <script>
     const $=id=>document.getElementById(id);
+    const esc=s=>String(s??'').replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#39;"}[m]));
     async function j(path,opt){const r=await fetch(path,{...opt,headers:{'Content-Type':'application/json',...(opt&&opt.headers||{})}});const d=await r.json();if(!r.ok)throw new Error(d.error||'Request failed');return d}
 
-    function cursorFx(){
-      const c=$('cursor-effects-container');
-      addEventListener('mousemove',e=>{for(let i=0;i<2;i++){const p=document.createElement('div');p.className='cursor-effect-particle';p.style.left=e.clientX+(Math.random()*8-4)+'px';p.style.top=e.clientY+(Math.random()*8-4)+'px';p.style.background='radial-gradient(circle,#ffd700,#ff8c00)';c.appendChild(p);setTimeout(()=>p.remove(),800);}})
-    }
+    function cursorFx(){const c=$('cursor-effects-container');addEventListener('mousemove',e=>{for(let i=0;i<2;i++){const p=document.createElement('div');p.className='particle';p.style.left=e.clientX+(Math.random()*8-4)+'px';p.style.top=e.clientY+(Math.random()*8-4)+'px';c.appendChild(p);setTimeout(()=>p.remove(),800);}})}
+    function typing(){setInterval(()=>{$('tw').style.visibility=$('tw').style.visibility==='hidden'?'visible':'hidden'},500)}
+
+    function renderProjects(items){$('projects').innerHTML=(items||[]).map(p=>`<article class='project'>${p.image?`<img src='${esc(p.image)}' alt='${esc(p.title||'project')}'>`:''}<div class='bd'><b>${esc(p.title||'Project')}</b><p>${esc(p.description||'')}</p></div></article>`).join('')||"<p class='desc'>No projects yet.</p>"}
 
     function render(cfg){
-      document.title=`@${cfg.name} | emogir.ls style`;
+      document.title=`@${cfg.name||'hade133'} | profile`;
       document.documentElement.style.setProperty('--accent',cfg.accentColor||'#fff');
       $('name').childNodes[0].nodeValue=cfg.name||'hade133';
       $('description').textContent=cfg.description||'';
+      $('availability').textContent=cfg.availability||'ONLINE';
       $('pfp').src=cfg.pfp||'/uploads/default-pfp.svg';
-      if(cfg.avatarDecoration){$('deco').src=cfg.avatarDecoration;$('deco').style.display='block'}
+      $('deco').style.display=cfg.avatarDecoration?'block':'none';
+      if(cfg.avatarDecoration){$('deco').src=cfg.avatarDecoration;}
       $('views').textContent=cfg.views||0;
       $('place').textContent=cfg.place||'Earth';
       $('city').textContent=cfg.weatherCity||'Hamah';
       $('weather').textContent=`${cfg.weatherTemp||''} • ${cfg.weatherCondition||''}`;
-      $('about').innerHTML=(cfg.aboutLines||[]).map(l=>`<p>${l}</p>`).join('');
-      $('links').innerHTML=(cfg.links||[]).map(l=>`<a href="${l.url||'#'}" target="_blank">${l.label||'Link'}</a>`).join('');
-      const card=$('profile-card'); card.style.backgroundColor=`rgba(0,0,0,${cfg.cardOpacity ?? .75})`;
-      if(cfg.video){$('bgv').src=cfg.video}
+      $('about').innerHTML=(cfg.aboutLines||[]).map(l=>`<p>${esc(l)}</p>`).join('');
+      $('links').innerHTML=(cfg.links||[]).map(l=>`<a href='${esc(l.url||'#')}' target='_blank' rel='noopener'>${esc(l.label||'Link')}</a>`).join('');
+      renderProjects(cfg.projects);
+      $('profile-card').style.backgroundColor=`rgba(6,7,14,${cfg.cardOpacity ?? .72})`;
+      $('bgv').src=cfg.video||'';
 
+      const showMusic=Boolean(cfg.music && String(cfg.music).trim());
+      $('music-wrap').style.display=showMusic?'grid':'none';
       $('music-title').textContent=cfg.musicTitle||'Track';
       $('music-cover').src=cfg.musicCover||cfg.pfp||'/uploads/default-pfp.svg';
-      const a=$('audio'); a.src=cfg.music||'';
+      $('audio').src=showMusic?cfg.music:'';
     }
 
     const a=$('audio');
     $('play').onclick=async()=>{if(!a.src){$('play').textContent='No music';return;} if(a.paused){await a.play();$('play').textContent='Pause'}else{a.pause();$('play').textContent='Play'}};
     a.ontimeupdate=()=>{const d=a.duration||0,c=a.currentTime||0;$('cur').textContent=`${Math.floor(c/60)}:${String(Math.floor(c%60)).padStart(2,'0')}`;$('dur').textContent=`${Math.floor(d/60)}:${String(Math.floor(d%60)).padStart(2,'0')}`;$('fill').style.width=d?`${(c/d)*100}%`:'0%'};
 
-    $('contact-form').onsubmit=async(e)=>{e.preventDefault();
-      try{await j('/api/contact',{method:'POST',body:JSON.stringify({name:$('cn').value.trim(),email:$('ce').value.trim(),message:$('cm').value.trim()})});$('st').textContent='✅ Sent';e.target.reset();}
-      catch(err){$('st').textContent='❌ '+err.message;}
-    }
+    $('contact-form').onsubmit=async(e)=>{e.preventDefault();try{await j('/api/contact',{method:'POST',body:JSON.stringify({name:$('cn').value.trim(),email:$('ce').value.trim(),message:$('cm').value.trim()})});$('st').textContent='✅ Sent';e.target.reset();}catch(err){$('st').textContent='❌ '+err.message;}}
 
-    setInterval(()=>{$('tw').style.visibility=$('tw').style.visibility==='hidden'?'visible':'hidden'},500);
-    cursorFx();
+    cursorFx(); typing();
     j('/api/config').then(render).catch(err=>{$('st').textContent='❌ '+err.message});
   </script>
 </body>
